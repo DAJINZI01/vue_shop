@@ -3,7 +3,9 @@
     <div class="login_box">
       <!-- 头衔区域 -->
       <div class="avatar_box">
-        <img src="../assets/logo.png" alt="">
+        <router-link to="/home">
+          <img src="../assets/images/logo_login.png" alt="">
+        </router-link>
       </div>
       <!-- 登录表单区域 -->
       <div class="form_box">
@@ -58,7 +60,7 @@ export default {
         // 发送请求 post
         this.$message.error('登录失败')
         // 登录成功 保存token 到 sessionStorage 中
-        window.sessionStorage.setItem('token', '我是token')
+        window.sessionStorage.setItem('token', 'i am token')
         // 跳转主页
         this.$router.push('/home')
         // 这里的验证，先不实现，要用到后端
