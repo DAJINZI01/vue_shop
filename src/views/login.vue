@@ -35,14 +35,14 @@ export default {
     return {
       // 这是登录表单的数据绑定对象
       loginForm: {
-        username: 'winner',
+        username: '张三',
         password: '123456'
       },
       // 表单的验证规则对象
       rules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, max: 12, message: '长度需要在3-12之间', trigger: 'blur' }
+          { min: 2, max: 12, message: '长度需要在2-12之间', trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
@@ -57,15 +57,14 @@ export default {
       this.$refs[formName].validate(async (valid) => {
         // 验证失败
         if (!valid) return false
-        // 发送请求 post
-        this.$message.error('登录失败')
-        // 登录成功 保存token 到 sessionStorage 中
-        window.sessionStorage.setItem('token', 'i am token')
-        // 跳转主页
-        this.$router.push('/home')
-        // 这里的验证，先不实现，要用到后端
+        // 调用 API 接口
         const { data: res } = await this.$http.post('/user/login', this.loginForm)
-        console.log(res)
+        // 登录失败 显示提示框
+        if (res.meta.code) return this.$message.error(res.meta.msg)
+        // 登录成功 保存token 到 sessionStorage 中
+        window.sessionStorage.setItem('token', res.data.token)
+        // 跳转主页
+        await this.$router.push('/home')
       })
     },
     // 表单重置函数
