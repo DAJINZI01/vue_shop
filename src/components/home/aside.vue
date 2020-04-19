@@ -17,16 +17,16 @@
         <!-- 一级菜单 模板区域 -->
         <template slot="title">
           <!-- 图标 -->
-          <i :class="menu.className"></i>
+          <i :class="menuIcon[menu.id]"></i>
           <!-- 文本标题 -->
-          <span>{{ menu.authName }}</span>
+          <span>{{ menu.name }}</span>
         </template>
         <!-- 二级菜单 -->
-        <el-menu-item :index="submenu.path" v-for="submenu in menu.children" :key="submenu.id" @click="handleActive">
+        <el-menu-item :index="submenu.action" v-for="submenu in menu.child_rights" :key="submenu.id" @click="handleActive">
           <!-- 图标 -->
-          <i :class="submenu.className"></i>
+          <i class="el-icon-menu"></i>
           <!-- 文本标题 -->
-          <span>{{ submenu.authName }}</span>
+          <span>{{ submenu.name }}</span>
         </el-menu-item>
       </el-submenu>
     </el-menu>
@@ -39,6 +39,14 @@ export default {
     return {
       // 菜单列表 包含子菜单
       menuList: [],
+      // 菜单图标字典
+      menuIcon: {
+        101: 'el-icon-goods',
+        102: 'el-icon-s-order',
+        103: 'el-icon-setting',
+        125: 'el-icon-user-solid',
+        145: 'el-icon-pie-chart'
+      },
       // 左侧菜单列表是否折叠 默认为 不折叠
       isCollapse: false,
       // 菜单显示激活状态 从 sessionStorage 中取出
@@ -52,67 +60,67 @@ export default {
   methods: {
     getMenuList: async function () {
       // 调用API获取接口菜单数据
-      this.$message.error('获取菜单失败，请别写后端API接口')
-      this.menuList = [
-        {
-          id: 1,
-          order: null,
-          path: '',
-          authName: '用户管理',
-          className: 'el-icon-user-solid',
-          children: [
-            { id: 1001, order: null, path: '/user_list', authName: '用户列表', className: 'el-icon-s-home', children: null }
-          ]
-        },
-        {
-          id: 2,
-          order: null,
-          path: '',
-          authName: '权限管理',
-          className: 'el-icon-setting',
-          children: [
-            { id: 2001, order: null, path: '/role_list', authName: '角色列表', className: 'el-icon-edit', children: null },
-            { id: 2002, order: null, path: '/privilege_list', authName: '权限列表', className: 'el-icon-edit', children: null }
-          ]
-        },
-        {
-          id: 3,
-          order: null,
-          path: '',
-          authName: '商品管理',
-          className: 'el-icon-goods',
-          children: [
-            { id: 3001, order: null, path: '/goods_list', authName: '商品列表', className: 'el-icon-edit', children: null },
-            { id: 3002, order: null, path: '/', authName: '分类参数', className: 'el-icon-edit', children: null },
-            { id: 3003, order: null, path: '/goods_category', authName: '商品分类', className: 'el-icon-edit', children: null }
-          ]
-        },
-        {
-          id: 4,
-          order: null,
-          path: '',
-          authName: '订单管理',
-          className: 'el-icon-s-order',
-          children: [
-            { id: 4001, order: null, path: '/order_list', authName: '订单列表', className: 'el-icon-collection-tag', children: null }
-          ]
-        },
-        {
-          id: 5,
-          order: null,
-          path: '',
-          authName: '数据统计',
-          className: 'el-icon-pie-chart',
-          children: [
-            { id: 5001, order: null, path: '/report', authName: '分析报告', className: 'el-icon-collection-tag', children: null }
-          ]
-        }
-      ]
+      // this.$message.error('获取菜单失败，请别写后端API接口')
+      // this.menuList = [
+      //   {
+      //     id: 1,
+      //     order: null,
+      //     path: '',
+      //     authName: '用户管理',
+      //     className: 'el-icon-user-solid',
+      //     children: [
+      //       { id: 1001, order: null, path: '/user', authName: '用户列表', className: 'el-icon-s-home', children: null }
+      //     ]
+      //   },
+      //   {
+      //     id: 2,
+      //     order: null,
+      //     path: '',
+      //     authName: '权限管理',
+      //     className: 'el-icon-setting',
+      //     children: [
+      //       { id: 2001, order: null, path: '/role', authName: '角色列表', className: 'el-icon-edit', children: null },
+      //       { id: 2002, order: null, path: '/rights', authName: '权限列表', className: 'el-icon-edit', children: null }
+      //     ]
+      //   },
+      //   {
+      //     id: 3,
+      //     order: null,
+      //     path: '',
+      //     authName: '商品管理',
+      //     className: 'el-icon-goods',
+      //     children: [
+      //       { id: 3001, order: null, path: '/goods', authName: '商品列表', className: 'el-icon-edit', children: null },
+      //       { id: 3002, order: null, path: '/', authName: '分类参数', className: 'el-icon-edit', children: null },
+      //       { id: 3003, order: null, path: '/goods_category', authName: '商品分类', className: 'el-icon-edit', children: null }
+      //     ]
+      //   },
+      //   {
+      //     id: 4,
+      //     order: null,
+      //     path: '',
+      //     authName: '订单管理',
+      //     className: 'el-icon-s-order',
+      //     children: [
+      //       { id: 4001, order: null, path: '/order_list', authName: '订单列表', className: 'el-icon-collection-tag', children: null }
+      //     ]
+      //   },
+      //   {
+      //     id: 5,
+      //     order: null,
+      //     path: '',
+      //     authName: '数据统计',
+      //     className: 'el-icon-pie-chart',
+      //     children: [
+      //       { id: 5001, order: null, path: '/report', authName: '分析报告', className: 'el-icon-collection-tag', children: null }
+      //     ]
+      //   }
+      // ]
 
       // 调用api的部分，后面在写
-      // const { data: res } = await this.$http.get('/menu') // 解包
-      // if (res.meta.code !== 0) return this.$message.error('获取菜单失败')
-      // this.menuList = res.data
+      const { data: res } = await this.$http.get('/rights/menu') // 解包
+      if (res.meta.code !== 0) return this.$message.error('获取菜单失败')
+      this.menuList = res.data
     },
     // 折叠菜单功能
     toggle_collapse: function () {
