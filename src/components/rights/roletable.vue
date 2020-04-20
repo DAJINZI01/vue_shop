@@ -238,6 +238,7 @@ export default {
       })
     },
     async handleRights (index, row) {
+      this.defaultCheckedKeys = []
       this.updateRightsDialogVisible = true
       this.roleId = row.id
       const { data: res } = await this.$http.get('/rights/level')

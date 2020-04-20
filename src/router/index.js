@@ -7,6 +7,7 @@ import welcome from '../components/home/welcome.vue'
 import user from '../views/user.vue'
 import rights from '../views/rights.vue'
 import role from '../views/role.vue'
+import category from '../views/category.vue'
 
 Vue.use(VueRouter)
 
@@ -15,17 +16,17 @@ const routes = [
   { path: '/login', component: login },
   {
     path: '/home',
-    // component: home,
     components: {
       default: home,
       aside: aside
     },
-    // redirect: '/welcome',
+    redirect: '/welcome',
     children: [
       { path: '/welcome', component: welcome },
       { path: '/user', component: user },
       { path: '/rights', component: rights },
-      { path: '/role', component: role }
+      { path: '/role', component: role },
+      { path: '/goods_category', component: category }
     ]
   }
 ]
