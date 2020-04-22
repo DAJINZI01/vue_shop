@@ -172,8 +172,7 @@ export default {
     },
     // 子商品分类懒惰加载
     async loadChildCategory (tree, treeNode, resolve) {
-      this.params.pid = tree.id
-      const { data: res } = await this.$http.get('/goods/category/', { params: this.params })
+      const { data: res } = await this.$http.get('/goods/category/' + tree.id)
       if (res.meta.code) return this.$message.error(res.meta.msg)
       resolve(res.data.child_category)
     },
