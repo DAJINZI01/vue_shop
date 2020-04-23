@@ -7,3 +7,7 @@ html, body, #app{
 .el-cascader-panel {
     height: 200px !important;
 }
+
+.ql-editor {
+    min-height: 300px;
+}

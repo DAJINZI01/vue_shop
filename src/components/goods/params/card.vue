@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     async getCategoryList () {
-      const { data: res } = await this.$http.get('/goods/category/')
+      const { data: res } = await this.$http.get('/goods/category')
       if (res.meta.code) return this.$message.error(res.meta.msg)
       this.formatData(res.data)
       this.categoryOptions = res.data

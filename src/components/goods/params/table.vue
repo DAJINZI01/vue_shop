@@ -152,7 +152,7 @@ export default {
     updateAttribute () {
       this.$refs.updateAttributeForm.validate(async (valid) => {
         if (!valid) return false
-        const { data: res } = await this.$http.put('/goods/attribute/' + this.updateAttributeId, this.updateAttributeForm)
+        const { data: res } = await this.$http.put('/goods/attribute' + this.updateAttributeId, this.updateAttributeForm)
         if (res.meta.code) return this.$message.error(res.meta.msg)
         // 更新成功
         this.$message.success('更新数据成功')

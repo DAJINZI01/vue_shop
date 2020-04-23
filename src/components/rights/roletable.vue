@@ -175,7 +175,7 @@ export default {
   },
   methods: {
     async getRoleList () {
-      const { data: res } = await this.$http.get('/role/', { params: this.params })
+      const { data: res } = await this.$http.get('/role', { params: this.params })
       if (res.meta.code) return this.$message.error(res.meta.msg)
       this.roleList = res.data.role_list
       this.total = res.data.total
@@ -191,7 +191,7 @@ export default {
     addRole (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (!valid) return false
-        const { data: res } = await this.$http.post('/role/', this.addRoleForm)
+        const { data: res } = await this.$http.post('/role', this.addRoleForm)
         if (res.meta.code) return this.$message.error(res.meta.msg)
         this.addRoleDialogVisible = false
         this.$message.success('添加角色成功')

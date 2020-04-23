@@ -20,7 +20,7 @@
       <el-table-column label="路由" prop="action"></el-table-column>
       <el-table-column label="等级" prop="level">
         <template slot-scope="scope">
-          <el-tag :type="tagMap[scope.row.level].type">{{ tagMap[scope.row.level].levelName }}</el-tag>
+          <el-tag :type="getTagType(scope.row.level)">{{ scope.row.level }}</el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -45,25 +45,23 @@ export default {
         per_page: 10
       },
       total: 0,
-      permissionList: [],
-      // 等级字典
-      tagMap: {
-        0: { levelName: '零级', type: '' },
-        1: { levelName: '一级', type: 'success' },
-        2: { levelName: '二级', type: 'info' },
-        3: { levelName: '三级', type: 'warning' },
-        4: { levelName: '四级', type: 'danger' },
-        5: { levelName: '五级', type: '' },
-        null: { levelName: '无', type: '' }
-      }
+      permissionList: []
     }
   },
   created () {
     this.getPermissionList()
   },
   methods: {
+    getTagType (level) {
+      switch (level) {
+        case '一级': return 'success'
+        case '二级': return 'info'
+        case '三级': return 'warning'
+        default: return 'danger'
+      }
+    },
     async getPermissionList () {
-      const { data: res } = await this.$http.get('/rights/', { params: this.params })
+      const { data: res } = await this.$http.get('/rights', { params: this.params })
       if (res.meta.code) return this.$message.error(res.meta.msg)
       this.permissionList = res.data.rights_list
       this.total = res.data.total

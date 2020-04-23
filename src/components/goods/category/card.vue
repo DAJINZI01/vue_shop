@@ -1,6 +1,6 @@
 <template>
     <el-card>
-      <div slot="header" class="clearfix">
+      <div slot="header">
         <span>商品分类</span>
         <el-button style="float: right; padding: 3px 0" type="text">Operation button</el-button>
       </div>
@@ -165,7 +165,7 @@ export default {
       this.getCategoryList()
     },
     async getCategoryList () {
-      const { data: res } = await this.$http.get('/goods/category/', { params: this.params })
+      const { data: res } = await this.$http.get('/goods/category', { params: this.params })
       if (res.meta.code) return this.$message.error(res.meta.msg)
       this.categoryList = res.data.category_list
       this.total = res.data.total
@@ -201,7 +201,7 @@ export default {
       this.addCategoryDialogVisible = true
       if (this.categoryOptions.length) return
       this.params.page = this.params.per_page = this.params.pid = null
-      const { data: res } = await this.$http.get('/goods/category/', { params: this.params })
+      const { data: res } = await this.$http.get('/goods/category', { params: this.params })
       if (res.meta.code) return this.$message.error(res.meta.msg)
       this.formatData(res.data)
       this.categoryOptions = res.data
@@ -215,7 +215,7 @@ export default {
     addCategory () {
       this.$refs.addCategoryForm.validate(async (valid) => {
         if (!valid) return false
-        const { data: res } = await this.$http.post('/goods/category/', this.addCategoryForm)
+        const { data: res } = await this.$http.post('/goods/category', this.addCategoryForm)
         if (res.meta.code) return this.$message.error(res.meta.msg)
         this.$message.success('添加商品分类成功')
         this.addCategoryDialogVisible = false
@@ -223,7 +223,7 @@ export default {
       })
     },
     async updateCategoryById () {
-      const { data: res } = await this.$http.put('/goods/category/' + this.updateCategoryId, this.updateCategoryForm)
+      const { data: res } = await this.$http.put('/goods/category' + this.updateCategoryId, this.updateCategoryForm)
       if (res.meta.code) return this.$message.error(res.meta.msg)
       this.$message.success('修改商品分类成功')
       this.updateCategoryDialogVisible = false

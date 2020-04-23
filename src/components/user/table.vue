@@ -3,7 +3,8 @@
     <!-- 搜索框 -->
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-input placeholder="Please input" clearable v-model="params.username" @clear="getUserList">
+        <el-input placeholder="Please input" clearable v-model="params.username"
+                  @clear="getUserList" @keyup.enter.native="searchUser">
           <el-button slot="append" icon="el-icon-search" @click="searchUser"></el-button>
         </el-input>
       </el-col>
@@ -270,7 +271,7 @@ export default {
       // this.userList = userList.splice((this.params.page_num - 1) * this.params.page_size, this.params.page_size)
       // this.$message.error('获取用户列表信息失败，请求编写后端API接口')
       // 接口 参数 page_num , page_size query
-      const { data: res } = await this.$http.get('/user/', { params: this.params })
+      const { data: res } = await this.$http.get('/user', { params: this.params })
       // 验证失败
       if (res.meta.code) {
         this.$message.error(res.meta.msg)
@@ -369,7 +370,7 @@ export default {
       this.setRoleDialogVisible = true
       this.currentUser = row
       // 获取角色列表
-      const { data: res } = await this.$http.get('/role/')
+      const { data: res } = await this.$http.get('/role')
       if (res.meta.code) return this.$message.error(res.meta.msg)
       this.roleOptions = res.data.role_list
     },
