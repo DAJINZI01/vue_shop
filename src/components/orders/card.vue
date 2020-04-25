@@ -203,4 +203,7 @@ export default {
   .el-timeline {
     padding: 0;
   }
+  .el-table {
+    margin: 20px 0;
+  }
 </style>
